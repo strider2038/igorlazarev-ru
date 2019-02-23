@@ -2,7 +2,7 @@ sudo: false
 
 language: ruby
 rvm:
-  - 2.4.1
+  - 2.6
 
 branches:
   only:
@@ -29,7 +29,8 @@ before_install:
   - ssh -p "$SERVER_PORT" -i ./deploy_key "$SERVER_USER@$SERVER_IP_ADDRESS" pwd
 
 install:
-  - gem install jekyll html-proofer
+  - gem update --system
+  - gem install bundler jekyll html-proofer
 
 script:
   - jekyll build
