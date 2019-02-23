@@ -35,10 +35,11 @@ script:
   - bundle install --path vendor/cache
   - bundle exec jekyll build
   #- bundle exec htmlproofer ./_site
+  - zip -r site.zip ./_site
 
 deploy:
   provider: script
   skip_cleanup: true
-  script: rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/_site --port "$SERVER_PORT" "$SERVER_USER@$SERVER_IP_ADDRESS":~/igorlazerev-ru
+  script: ./deploy.sh
   on:
     branch: master
