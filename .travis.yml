@@ -26,7 +26,7 @@ before_install:
   - echo -e "Host $SERVER_IP_ADDRESS\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
   - ssh-add ./deploy_key
     # test ssh connection for: https://github.com/dwyl/learn-travis/issues/42
-  - ssh -i -P "$SERVER_PORT" ./deploy_key "$SERVER_USER@$SERVER_IP_ADDRESS" pwd
+  - ssh -p "$SERVER_PORT" -i ./deploy_key "$SERVER_USER@$SERVER_IP_ADDRESS" pwd
 
 install:
   - gem install jekyll html-proofer
