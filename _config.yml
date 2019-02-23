@@ -1,0 +1,54 @@
+title: Игорь Лазарев - блог о программировании
+url: "http://igorlazarev.ru"
+baseurl: ""
+description: >
+  Игорь Лазарев. Блог о программировании и web-разработке. Объектно-ориентированное программирование,
+  SOLID, TDD, BDD, PHP, Golang и многое другое.
+email: strider2038@yandex.ru
+author: Игорь Лазарев
+avatar: "//www.gravatar.com/avatar/b4054b60d0941d7c7b0bfdfc23512202?d=mm&s=135"
+profile: Любитель чистого кода и TDD
+
+github_username: strider2038
+profile_links:
+  Email: "mailto:strider2038@yandex.ru"
+
+# Comment Service (Disqus or 多说)
+#  choose one and un-comment the line to active it
+#disqus_shortname: xxx   # get one: https://disqus.com/admin/signup/
+#duoshuo_shortname: xxx  # get one: http://duoshuo.com/create-site/
+
+excerpt_separator: <!--more-->
+
+header:
+  # Links on the header. Link to in-site page with a slash as prefix
+  links:
+    О сайте: /about/
+    Категории: /category/
+
+permalink: /posts/:title
+plugins:
+ - jekyll-paginate
+ - jekyll-gist
+ - jemoji
+
+# Build settings
+paginate: 5
+paginate_path: "page:num"
+
+highlighter: rouge
+markdown: kramdown
+
+# https://jekyllrb.com/docs/configuration/#precedence
+defaults:
+  -
+    scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+  math_engine: mathjax
