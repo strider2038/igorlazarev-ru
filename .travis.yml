@@ -34,7 +34,7 @@ install:
 script:
   - bundle install --path vendor/cache
   - bundle exec jekyll build
-  - bundle exec htmlproofer ./_site
+  #- bundle exec htmlproofer ./_site
 
 deploy:
   provider: script
