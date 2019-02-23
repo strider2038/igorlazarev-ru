@@ -32,8 +32,8 @@ install:
   - gem install jekyll html-proofer
 
 script:
-  - bundle exec jekyll build
-  - bundle exec htmlproofer ./_site
+  - jekyll build
+  - htmlproofer ./_site
 
 deploy:
   provider: script
