@@ -29,13 +29,12 @@ before_install:
   - ssh -p "$SERVER_PORT" -i ./deploy_key "$SERVER_USER@$SERVER_IP_ADDRESS" pwd
 
 install:
-#  - gem update --system
   - gem install bundler jekyll html-proofer
 
 script:
   - bundle install --path vendor/cache
-  - jekyll build
-  - htmlproofer ./_site
+  - bundle exec jekyll build
+  - bundle exec htmlproofer ./_site
 
 deploy:
   provider: script
