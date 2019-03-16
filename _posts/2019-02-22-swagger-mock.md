@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Swagger Mock - сервер для генерирования фиктивных ответов API"
-date:   2019-02-22 08:00
+date:   2019-02-22
 categories: swagger php road-runner
 permalink: /posts/2019-02-22-swagger-mock
 ---
