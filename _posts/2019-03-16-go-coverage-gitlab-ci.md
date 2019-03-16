@@ -2,7 +2,7 @@
 layout: post
 title:  "Настройка покрытия тестами проекта на Go в GitLab CI"
 date:   2019-03-16
-categories: swagger php road-runner
+categories: go gitlab testing
 permalink: /posts/2019-03-16-go-coverage-gitlab-ci
 ---
 
