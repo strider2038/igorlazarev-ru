@@ -1,5 +1,4 @@
-_site
-.sass-cache
-.jekyll-metadata
-.c9
-deploy_key
+/public
+/var
+
+*.lock
