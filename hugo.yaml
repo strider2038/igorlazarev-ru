@@ -11,6 +11,12 @@ minify:
   disableXML: true
   minifyOutput: true
 
+outputs:
+  home:
+    - HTML
+    - RSS
+    - JSON # necessary for search
+
 params:
   env: production # to enable google analytics, opengraph, twitter-cards and schema.
   title: Игорь Лазарев - заметки Golang программиста
@@ -81,6 +87,8 @@ params:
   socialIcons:
     - name: github
       url: "https://github.com/strider2038"
+    - name: telegram
+      url: "https://t.me/godevnotes"
 
 #  analytics:
 #    yandex:
@@ -109,14 +117,22 @@ params:
     keys: ["title", "permalink", "summary", "content"]
 menu:
   main:
+    - identifier: search
+      name: поиск
+      url: /search/
+      weight: 10
+    - identifier: archives
+      name: архив
+      url: /archives/
+      weight: 20
     - identifier: categories
       name: категории
       url: /categories/
-      weight: 10
+      weight: 30
     - identifier: tags
       name: теги
       url: /tags/
-      weight: 20
+      weight: 40
 
 # Read: https://github.com/adityatelange/hugo-PaperMod/wiki/FAQs#using-hugos-syntax-highlighter-chroma
 pygmentsUseClasses: true
