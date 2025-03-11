@@ -1,4 +1,6 @@
 /public
 /var
 
+assets/jsconfig.json
+resources
 *.lock
