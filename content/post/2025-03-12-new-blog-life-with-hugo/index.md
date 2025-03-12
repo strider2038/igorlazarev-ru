@@ -1,6 +1,5 @@
 ---
 date: '2025-03-12T21:42:31+03:00'
-draft: true
 title: 'Новая жизнь журнала на Hugo'
 image: 'hugo-logo.svg'
 ---
