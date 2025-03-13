@@ -1,6 +1,7 @@
 ---
-date: '2025-03-12T21:42:31+03:00'
 title: 'Новая жизнь журнала на Hugo'
+slug: 'new-blog-life-with-hugo'
+date: '2025-03-12T21:42:31+03:00'
 image: 'hugo-logo.svg'
 tags: ["news"]
 ---

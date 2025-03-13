@@ -1,5 +1,6 @@
 ---
 title: "Swagger Mock - сервер для генерирования фиктивных ответов API"
+slug: "swagger-mock"
 date: 2019-02-22
 categories: ["API"]
 tags: ["swagger", "php", "road-runner"]
