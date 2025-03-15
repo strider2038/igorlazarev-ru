@@ -1,8 +1,11 @@
 baseurl: https://igorlazarev.ru/
 languageCode: ru
 title: Игорь Лазарев
-theme: ["hugo-theme-stack"]
 copyright: Игорь Лазарев
+theme: "hugo-theme-stack"
+
+ignorefiles:
+  - "content/slides"
 
 enableRobotsTXT: true
 buildDrafts: false
@@ -17,6 +20,15 @@ outputs:
     - HTML
     - RSS
     - JSON # necessary for search
+
+## Reveal.js presentations
+outputFormats:
+  html:
+    weight: 2
+  reveal:
+    baseName: "index"
+    mediaType: "text/html"
+    isHTML: true
 
 # Theme i18n support
 # Available values: ar, bn, ca, de, el, en, es, fr, hu, id, it, ja, ko, nl, pt-br, th, uk, zh-cn, zh-hk, zh-tw

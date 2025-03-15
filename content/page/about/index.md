@@ -1,5 +1,6 @@
 ---
 title: О себе
+slug: about
 description: Golang разработчик, IT-архитектор и техлид
 date: '2025-03-11'
 menu:

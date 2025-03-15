@@ -1,0 +1,35 @@
+baseURL: 'https://igorlazarev.ru/slides'
+languageCode: ru
+title: Игорь Лазарев
+copyright: Игорь Лазарев
+theme:
+  - reveal-hugo
+
+contentDir: content/slides
+publishDir: public/slides
+staticDir: static/slides
+
+markup:
+  highlight:
+    codeFences: false
+  goldmark:
+    renderer:
+      unsafe: true
+
+outputFormats:
+  Reveal:
+    baseName: index
+    mediaType: text/html
+    isHTML: true
+
+params:
+  reveal_hugo:
+    theme: sky
+    highlight_theme: "monokai"
+    slide_number: true
+    transition: "slide"
+
+sitemap:
+  changefreq: monthly
+  filename: sitemap.xml
+  priority: 0.5
