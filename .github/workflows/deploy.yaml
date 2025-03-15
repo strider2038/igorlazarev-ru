@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - master
-  pull_request:
 
 jobs:
   deploy:
@@ -24,7 +23,9 @@ jobs:
           extended: true
 
       - name: Build
-        run: hugo --minify
+        run: |
+          hugo --minify
+          hugo --minify --config hugo-slides.yaml
 
       - name: Deploy
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5

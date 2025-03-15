@@ -1,0 +1,20 @@
+# https://taskfile.dev
+
+version: '3'
+
+tasks:
+  build:
+    cmds:
+      - rm -rf public/*
+      - hugo
+      - hugo --config hugo-slides.yaml
+
+  serve:
+    cmds:
+      - task: build
+      - go run main.go
+
+  dev-slides:
+    cmds:
+      - rm -rf public/*
+      - hugo server -D --disableFastRender --config hugo-slides.yaml
