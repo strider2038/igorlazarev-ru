@@ -21,15 +21,6 @@ outputs:
     - RSS
     - JSON # necessary for search
 
-## Reveal.js presentations
-outputFormats:
-  html:
-    weight: 2
-  reveal:
-    baseName: "index"
-    mediaType: "text/html"
-    isHTML: true
-
 # Theme i18n support
 # Available values: ar, bn, ca, de, el, en, es, fr, hu, id, it, ja, ko, nl, pt-br, th, uk, zh-cn, zh-hk, zh-tw
 DefaultContentLanguage: ru
@@ -47,12 +38,9 @@ services:
   # Change it to your Disqus shortname before using
   disqus:
     shortname: "hugo-theme-stack"
-  # GA Tracking ID
-  googleAnalytics:
-    id:
 
 pagination:
-  pagerSize: 3
+  pagerSize: 5
 
 permalinks:
   post: /p/:slug/
