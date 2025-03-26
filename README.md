@@ -11,6 +11,10 @@
 * [hugo-theme-stack](https://stack.jimmycai.com/) как основная;
 * [reveal-hugo](https://github.com/joshed-io/reveal-hugo) для презентаций.
 
+## Система комментариев
+
+Используется [giscus](https://giscus.app/ru). 
+
 ## Установка новых тем
 
 ```shell
