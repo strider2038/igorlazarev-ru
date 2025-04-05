@@ -3,7 +3,7 @@ title: "Swagger Mock - сервер для генерирования фикти
 slug: "swagger-mock"
 date: 2019-02-22
 categories: ["API"]
-tags: ["swagger", "php", "road-runner"]
+tags: ["Swagger", "PHP", "Road-Runner"]
 ---
 
 Уже довольно продолжительное время я практикую подход Design First в web-разработке. Одним из удобных инструментов этого подхода является ведение документации в формате [OpenAPI / Swagger](https://swagger.io/specification/). Обычно при поступлении задачи от бизнеса собираются front-end и back-end разработчики и составляют контракт в виде описания API endpoint'ов. Затем разработка разделяется и каждый работает со своей частью.

@@ -3,6 +3,14 @@
 version: '3'
 
 tasks:
+  post:
+    vars:
+      DATE:
+        sh: echo $(date '+%Y-%m')
+    cmds:
+      - hugo new content/post/{{.DATE}}-{{.CLI_ARGS}}/index.md
+      - git add .
+
   build:
     cmds:
       - rm -rf public/*

@@ -1,5 +1,8 @@
 ---
+title: '{{ strings.Substr (replace .File.ContentBaseName "-" " ") 8 | title }}'
+slug: '{{ strings.Substr .File.ContentBaseName 8 }}'
 date: '{{ .Date }}'
-title: '{{ replace .File.ContentBaseName "-" " " | title }}'
-slug: ''
+categories: ["todo"]
+tags: ["todo"]
+image: "poster.jpg"
 ---
