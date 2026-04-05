@@ -1,6 +1,7 @@
 ---
 title: 'Уменьшаем риск nil pointer panic с помощью Null Type pattern'
 slug: 'go-null-type-pattern'
+translationKey: go-null-type-pattern
 date: '2025-04-05'
 categories: ["Программирование"]
 tags: ["Golang", "null", "типизация", "паттерн"]
