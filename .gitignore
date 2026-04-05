@@ -5,3 +5,5 @@
 assets/jsconfig.json
 resources
 *.lock
+__pycache__/
+*.py[cod]

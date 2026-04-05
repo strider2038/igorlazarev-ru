@@ -26,3 +26,24 @@ git submodule add https://github.com/<path-to>/<repository>.git themes/<theme-na
 ## Частые вопросы
 
 * Иконки можно брать отсюда <https://tabler.io/icons>
+
+## Telegram анонсы новых постов
+
+После деплоя workflow может отправлять анонсы новых постов в Telegram-канал.
+
+Логика:
+
+* сообщение отправляется только для **новых** файлов `content/post/**/index.md`
+* правки существующих постов не анонсируются повторно
+* на `re-run` workflow повторная отправка отключена
+* summary для анонса обязательно запрашивается через OpenRouter
+
+Для настройки добавьте GitHub secrets:
+
+* `OPENROUTER_API_KEY`
+* `TELEGRAM_BOT_TOKEN`
+* `TELEGRAM_CHAT_ID`
+
+Опционально можно добавить GitHub Actions variable:
+
+* `OPENROUTER_MODEL` — модель OpenRouter для генерации summary. Если не задана, используется `openai/gpt-4o-mini`.

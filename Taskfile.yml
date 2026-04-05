@@ -2,8 +2,8 @@
 
 version: '3'
 
-env:
-  PATH: '{{.TASKFILE_DIR}}/bin:{{env "PATH"}}'
+vars:
+  HUGO: '{{.TASKFILE_DIR}}/bin/hugo'
 
 tasks:
   install-hugo-extended:
@@ -43,22 +43,28 @@ tasks:
         curl -sSfL "$URL" -o "{{.TASKFILE_DIR}}/bin/hugo-extended.tgz"
         tar -xzf "{{.TASKFILE_DIR}}/bin/hugo-extended.tgz" -C "{{.TASKFILE_DIR}}/bin" hugo
         rm -f "{{.TASKFILE_DIR}}/bin/hugo-extended.tgz"
-        chmod +x "{{.TASKFILE_DIR}}/bin/hugo"
-        "{{.TASKFILE_DIR}}/bin/hugo" version
+        chmod +x "{{.HUGO}}"
+        "{{.HUGO}}" version
+
+  init:
+    desc: Настройка после первого клонирования или развёртывания (submodules + Hugo Extended)
+    cmds:
+      - git submodule update --init --recursive
+      - task: install-hugo-extended
 
   post:
     vars:
       DATE:
         sh: echo $(date '+%Y-%m')
     cmds:
-      - hugo new content/post/{{.DATE}}-{{.CLI_ARGS}}/index.md
+      - '{{.HUGO}} new content/post/{{.DATE}}-{{.CLI_ARGS}}/index.md'
       - git add .
 
   build:
     cmds:
       - rm -rf public/*
-      - hugo
-      - hugo --config hugo-slides.yaml
+      - '{{.HUGO}}'
+      - '{{.HUGO}} --config hugo-slides.yaml'
 
   serve:
     cmds:
@@ -68,4 +74,4 @@ tasks:
   dev-slides:
     cmds:
       - rm -rf public/*
-      - hugo server -D --disableFastRender --config hugo-slides.yaml
+      - '{{.HUGO}} server -D --disableFastRender --config hugo-slides.yaml'

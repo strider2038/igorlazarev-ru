@@ -34,3 +34,29 @@ jobs:
           server: ${{ secrets.server }}
           username: ${{ secrets.username }}
           password: ${{ secrets.password }}
+
+  announce_posts:
+    runs-on: ubuntu-22.04
+    needs: deploy
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master' && github.run_attempt == 1
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Announce new posts in Telegram
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          OPENROUTER_MODEL: ${{ vars.OPENROUTER_MODEL || 'openai/gpt-4o-mini' }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          python3 scripts/telegram_new_posts.py \
+            --repo-root . \
+            --before "${{ github.event.before }}" \
+            --after "${{ github.sha }}"
