@@ -23,6 +23,8 @@ outputFormats:
     isHTML: true
 
 params:
+  author:
+    name: Игорь Лазарев
   reveal_hugo:
     theme: sky
     highlight_theme: "monokai"
