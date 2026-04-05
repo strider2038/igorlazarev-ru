@@ -2,7 +2,50 @@
 
 version: '3'
 
+env:
+  PATH: '{{.TASKFILE_DIR}}/bin:{{env "PATH"}}'
+
 tasks:
+  install-hugo-extended:
+    desc: Скачать Hugo Extended в ./bin (версия по умолчанию — последний релиз)
+    vars:
+      HUGO_VERSION: ''
+    cmds:
+      - |
+        set -euo pipefail
+        VERSION='{{.HUGO_VERSION}}'
+        if [ -z "$VERSION" ]; then
+          VERSION=$(curl -sSf https://api.github.com/repos/gohugoio/hugo/releases/latest | sed -n 's/.*"tag_name"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p')
+        fi
+        case "$VERSION" in v*) TAG="$VERSION" ;; *) TAG="v$VERSION" ;; esac
+        VER="${TAG#v}"
+        ARCH=$(uname -m)
+        OS=$(uname -s | tr '[:upper:]' '[:lower:]')
+        case "$OS" in
+          linux)
+            case "$ARCH" in
+              x86_64) SUFFIX=linux-amd64 ;;
+              aarch64|arm64) SUFFIX=linux-arm64 ;;
+              *) echo "unsupported architecture: $ARCH" >&2; exit 1 ;;
+            esac
+            ;;
+          darwin)
+            case "$ARCH" in
+              x86_64) SUFFIX=darwin-amd64 ;;
+              aarch64|arm64) SUFFIX=darwin-arm64 ;;
+              *) echo "unsupported architecture: $ARCH" >&2; exit 1 ;;
+            esac
+            ;;
+          *) echo "unsupported OS: $OS (need linux or darwin)" >&2; exit 1 ;;
+        esac
+        URL="https://github.com/gohugoio/hugo/releases/download/${TAG}/hugo_extended_${VER}_${SUFFIX}.tar.gz"
+        mkdir -p "{{.TASKFILE_DIR}}/bin"
+        curl -sSfL "$URL" -o "{{.TASKFILE_DIR}}/bin/hugo-extended.tgz"
+        tar -xzf "{{.TASKFILE_DIR}}/bin/hugo-extended.tgz" -C "{{.TASKFILE_DIR}}/bin" hugo
+        rm -f "{{.TASKFILE_DIR}}/bin/hugo-extended.tgz"
+        chmod +x "{{.TASKFILE_DIR}}/bin/hugo"
+        "{{.TASKFILE_DIR}}/bin/hugo" version
+
   post:
     vars:
       DATE:
