@@ -2,6 +2,7 @@
 title: "Настройка покрытия тестами проекта на Go в GitLab CI"
 slug: "go-coverage-gitlab-ci"
 date: 2019-03-16
+description: "Короткая инструкция по настройке измерения покрытия тестами Go-проекта в GitLab CI без сторонних утилит."
 categories: ["CI"]
 tags: ["Golang", "Gitlab", "CI", "testing"]
 ---

@@ -171,6 +171,14 @@ def clean_markdown(text: str) -> str:
     return text.strip()
 
 
+def extract_lead_text(raw_body: str) -> str:
+    lead = raw_body
+    if "<!--more-->" in lead:
+        lead = lead.split("<!--more-->", 1)[0]
+    lead = clean_markdown(lead)
+    return lead[:2000].strip()
+
+
 def build_post_url(base_url: str, post_permalink: str, slug: str) -> str:
     path = post_permalink.replace(":slug", slug)
     return f"{base_url}{path}"
@@ -201,18 +209,25 @@ def load_post(path: Path, base_url: str, post_permalink: str) -> Post:
 def request_openrouter_summary(post: Post) -> str:
     api_key = required_env("OPENROUTER_API_KEY")
     model = os.environ.get("OPENROUTER_MODEL", "openai/gpt-4o-mini")
+    raw_text = post.path.read_text(encoding="utf-8")
+    _, raw_body = parse_front_matter_and_body(raw_text)
+    lead_text = extract_lead_text(raw_body)
 
     prompt = (
-        "Сделай короткий анонс для Telegram-канала на русском языке.\n"
+        "Сожми начало статьи в короткое сообщение для Telegram-канала на русском языке.\n"
         "Требования:\n"
         "- 2-4 предложения\n"
+        "- максимально сохраняй формулировки и смысл из начала статьи\n"
+        "- главная задача: аккуратно сократить текст до формата короткого Telegram-сообщения\n"
+        "- не пересказывай статью заново своими словами без необходимости\n"
+        "- допустимы только минимальные правки ради краткости, связности и читабельности\n"
         "- живой, естественный тон\n"
         "- без хэштегов\n"
         "- без markdown и кавычек-елочек\n"
-        "- не повторяй заголовок буквально целиком в каждом предложении\n"
         "- не добавляй фактов, которых нет в тексте\n\n"
         f"Заголовок: {post.title}\n"
-        f"Текст статьи: {post.body[:6000]}"
+        f"Начало статьи: {lead_text}\n\n"
+        f"Полный текст статьи для контекста: {post.body[:6000]}"
     )
 
     payload = {
@@ -222,8 +237,9 @@ def request_openrouter_summary(post: Post) -> str:
             {
                 "role": "system",
                 "content": (
-                    "Ты пишешь короткие анонсы новых публикаций для Telegram-канала "
-                    "технического блога."
+                    "Ты готовишь короткие Telegram-анонсы новых публикаций технического блога. "
+                    "Нужно бережно сжимать начало статьи, не искажая смысл и не добавляя новых "
+                    "утверждений от себя."
                 ),
             },
             {"role": "user", "content": prompt},

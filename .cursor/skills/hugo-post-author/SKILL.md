@@ -52,6 +52,7 @@ Prepare:
 - `slug`
 - `translationKey` equal to the slug
 - `date`
+- `description`
 - `categories`
 - `tags`
 - `image: "poster.webp"`
@@ -78,6 +79,7 @@ Rules:
 
 - Start with a strong first paragraph that frames the point.
 - Insert `<!--more-->` after the intro, usually after the first paragraph.
+- Add a short `description` to front matter for homepage previews.
 - Use sections only when they help.
 - Keep paragraphs short and readable.
 - Preserve useful links and examples.
@@ -112,6 +114,7 @@ Keep aligned with the source post:
 - `slug`
 - `translationKey`
 - `date`
+- `description`
 - `image`
 
 Translate when appropriate:

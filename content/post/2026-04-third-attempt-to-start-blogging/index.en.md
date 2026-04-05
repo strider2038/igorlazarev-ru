@@ -3,6 +3,7 @@ title: 'Third Attempt to Start Blogging'
 slug: 'third-attempt-to-start-blogging'
 translationKey: third-attempt-to-start-blogging
 date: '2026-04-05T15:19:13+03:00'
+description: 'I want to give blogging another try, but in a format that does not eat up hours of writing and proofreading for every post.'
 categories: ["News"]
 tags: ["blog", "neural-networks"]
 image: "poster.png"

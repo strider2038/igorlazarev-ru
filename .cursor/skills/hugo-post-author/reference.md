@@ -9,6 +9,7 @@ title: '...'
 slug: '...'
 translationKey: ...
 date: '...'
+description: '...'
 categories: ["..."]
 tags: ["..."]
 image: "poster.webp"
@@ -17,6 +18,7 @@ image: "poster.webp"
 Notes:
 
 - `translationKey` should normally match `slug`.
+- `description` should be a short homepage-friendly preview, usually one sentence.
 - Keep categories and tags concise.
 - For English translations, preserve `slug`, `translationKey`, `date`, and `image`.
 

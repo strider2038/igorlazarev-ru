@@ -18,6 +18,7 @@ description: Перевести существующий русский пост
    - `slug`
    - `translationKey`
    - `date`
+   - `description`
    - `image`
 5. Переведи:
    - `title`

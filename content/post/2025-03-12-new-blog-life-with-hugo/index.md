@@ -3,6 +3,7 @@ title: 'Новая жизнь журнала на Hugo'
 slug: 'new-blog-life-with-hugo'
 translationKey: new-blog-life-with-hugo
 date: '2025-03-12T21:42:31+03:00'
+description: 'Перевел блог на Hugo, обновил деплой на GitHub Actions и решил дать журналу еще одну жизнь.'
 image: 'hugo-logo.svg'
 tags: ["news"]
 ---

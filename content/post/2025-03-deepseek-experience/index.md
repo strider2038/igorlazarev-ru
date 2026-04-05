@@ -2,6 +2,7 @@
 title: 'Как DeepSeek помог мне быстро решить задачу по метрикам'
 slug: 'deepseek-experience'
 date: '2025-03-26T20:20:00+03:00'
+description: 'Как с помощью DeepSeek я быстро нашел решение для Grafana и Prometheus и собрал дашборд по самым медленным endpoint''ам.'
 categories: ["Нейросети"]
 tags: ["LLM", "deepseek", "grafana", "prometheus"]
 image: 'poster.jpg'

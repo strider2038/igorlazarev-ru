@@ -3,6 +3,7 @@ title: 'Reducing nil pointer panic risk with the Null Type pattern'
 slug: 'go-null-type-pattern'
 translationKey: go-null-type-pattern
 date: '2025-04-05'
+description: 'An overview of the Null Type pattern in Go and how it can reduce nil pointer panic risk when working with nullable data.'
 categories: ["Programming"]
 tags: ["Golang", "null", "typing", "pattern"]
 image: "poster.jpg"

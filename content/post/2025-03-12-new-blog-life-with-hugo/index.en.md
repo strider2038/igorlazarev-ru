@@ -3,6 +3,7 @@ title: 'A new life for the blog on Hugo'
 slug: 'new-blog-life-with-hugo'
 translationKey: new-blog-life-with-hugo
 date: '2025-03-12T21:42:31+03:00'
+description: 'I moved the blog to Hugo, switched deployment to GitHub Actions, and decided to give the site a fresh start.'
 image: 'hugo-logo.svg'
 tags: ["news"]
 ---

@@ -3,6 +3,7 @@ title: 'Третья попытка начать вести блог'
 slug: 'third-attempt-to-start-blogging'
 translationKey: third-attempt-to-start-blogging
 date: '2026-04-05T15:19:13+03:00'
+description: 'Хочу снова попробовать вести блог, но в формате, который не съедает часы на написание и вычитку каждого поста.'
 categories: ["Новости"]
 tags: ["блог", "нейросети"]
 image: "poster.png"
