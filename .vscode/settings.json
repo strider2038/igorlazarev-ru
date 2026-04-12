@@ -1,0 +1,12 @@
+{
+  // Hugo: между первыми --- это YAML front matter. Форматтеры Markdown часто
+  // превращают title: в ## title:, съедают закрывающий --- и ломают сборку.
+  "[markdown]": {
+    "editor.formatOnSave": false,
+    "editor.defaultFormatter": null
+  },
+  "[mdx]": {
+    "editor.formatOnSave": false,
+    "editor.defaultFormatter": null
+  }
+}

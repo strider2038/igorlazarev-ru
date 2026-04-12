@@ -177,7 +177,7 @@ if ($items !== null) {
 
 Одной из самых печально известных проблем в программировании считается проблема null pointer exception. 
 Тони Хоар, известный учёный в области информатики (создатель алгоритма быстрой сортировки, один из разработчиков ALGOL),
-в своём [выступлении]((https://www.infoq.com/presentations/Null-References-The-Billion-Dollar-Mistake-Tony-Hoare/))
+в своём [выступлении](https://www.infoq.com/presentations/Null-References-The-Billion-Dollar-Mistake-Tony-Hoare/)
 признаёт, что изобретение null-ссылок в 1965 году стало его "ошибкой на миллиард долларов".
 
 > "Я называю это своей ошибкой на миллиард долларов… Это привело к бесчисленным ошибкам, уязвимостям
