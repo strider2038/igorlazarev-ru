@@ -6,7 +6,7 @@ date: '2026-04-05T15:19:13+03:00'
 description: 'I want to give blogging another try, but in a format that does not eat up hours of writing and proofreading for every post.'
 categories: ["News"]
 tags: ["blog", "neural-networks"]
-image: "poster.png"
+image: "poster.webp"
 ---
 
 I want to give blogging another try. There are plenty of topics I would like to write about, but I no longer want to spend several hours writing and proofreading every single post.
