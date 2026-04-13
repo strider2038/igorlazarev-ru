@@ -1,0 +1,448 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IgorLazarev Dev Blog - Design System Preview</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #f8fafc;
+        --surface: #ffffff;
+        --text: #0f172a;
+        --muted: #475569;
+        --border: #e2e8f0;
+        --accent: #2563eb;
+        --accent-soft: #dbeafe;
+        --radius: 14px;
+        --shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+      }
+
+      [data-theme="dark"] {
+        --bg: #020617;
+        --surface: #0f172a;
+        --text: #e2e8f0;
+        --muted: #94a3b8;
+        --border: #1e293b;
+        --accent: #60a5fa;
+        --accent-soft: #1e3a8a;
+        --shadow: 0 10px 30px rgba(2, 6, 23, 0.45);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Inter", system-ui, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.7;
+      }
+
+      .container {
+        width: min(1200px, calc(100% - 2rem));
+        margin: 0 auto;
+      }
+
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        backdrop-filter: blur(10px);
+        background: color-mix(in srgb, var(--bg) 88%, transparent);
+        border-bottom: 1px solid var(--border);
+      }
+
+      .topbar-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 64px;
+      }
+
+      .brand {
+        font-weight: 700;
+        letter-spacing: -0.02em;
+      }
+
+      .nav {
+        display: flex;
+        gap: 0.8rem;
+      }
+
+      .nav a {
+        color: var(--muted);
+        text-decoration: none;
+        padding: 0.35rem 0.6rem;
+        border-radius: 10px;
+        transition: color 180ms ease, background-color 180ms ease;
+      }
+
+      .nav a:hover,
+      .nav a:focus-visible {
+        color: var(--text);
+        background: var(--accent-soft);
+        outline: none;
+      }
+
+      .button {
+        cursor: pointer;
+        border: 1px solid var(--border);
+        background: var(--surface);
+        color: var(--text);
+        border-radius: 10px;
+        padding: 0.45rem 0.8rem;
+        font: inherit;
+        transition: border-color 180ms ease, background-color 180ms ease;
+      }
+
+      .button:hover,
+      .button:focus-visible {
+        border-color: var(--accent);
+        outline: none;
+      }
+
+      .layout {
+        display: grid;
+        grid-template-columns: 1.9fr 1fr;
+        gap: 1.2rem;
+        padding: 1.2rem 0 2rem;
+      }
+
+      .panel {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+      }
+
+      .hero {
+        padding: 1.2rem;
+      }
+
+      .kicker {
+        display: inline-block;
+        margin: 0;
+        font-size: 0.84rem;
+        font-weight: 600;
+        color: var(--accent);
+      }
+
+      h1,
+      h2,
+      h3 {
+        margin: 0;
+        line-height: 1.45;
+        letter-spacing: -0.02em;
+      }
+
+      .hero h1 {
+        margin-top: 0.4rem;
+        font-size: clamp(1.4rem, 2.4vw, 2rem);
+      }
+
+      .lead {
+        color: var(--muted);
+        margin: 0.7rem 0 0;
+      }
+
+      .section {
+        margin-top: 1rem;
+        padding: 1.2rem;
+      }
+
+      .post-list {
+        display: grid;
+        gap: 0.8rem;
+      }
+
+      .post-card {
+        text-decoration: none;
+        color: inherit;
+        display: block;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 0.85rem 1rem;
+        transition: border-color 180ms ease, box-shadow 180ms ease;
+        cursor: pointer;
+      }
+
+      .post-card:hover,
+      .post-card:focus-visible {
+        border-color: var(--accent);
+        box-shadow: 0 6px 16px rgba(37, 99, 235, 0.14);
+        outline: none;
+      }
+
+      .meta {
+        font-size: 0.88rem;
+        color: var(--muted);
+      }
+
+      .tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.45rem;
+        margin-top: 0.55rem;
+      }
+
+      .tag {
+        font-size: 0.78rem;
+        border-radius: 999px;
+        padding: 0.2rem 0.55rem;
+        background: var(--accent-soft);
+        color: var(--text);
+      }
+
+      .sidebar {
+        padding: 1rem;
+        display: grid;
+        gap: 0.9rem;
+        align-content: start;
+      }
+
+      .sidebar h3 {
+        font-size: 1rem;
+        margin-bottom: 0.3rem;
+      }
+
+      .sidebar ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .sidebar li + li {
+        margin-top: 0.3rem;
+      }
+
+      .sidebar a {
+        color: var(--muted);
+        text-decoration: none;
+      }
+
+      .sidebar a:hover,
+      .sidebar a:focus-visible {
+        color: var(--accent);
+        outline: none;
+      }
+
+      .article-wrap {
+        margin-top: 1.2rem;
+        padding: 1.2rem;
+      }
+
+      .prose {
+        max-width: 72ch;
+      }
+
+      .prose p {
+        margin: 0.9rem 0;
+      }
+
+      .prose h2 {
+        margin-top: 2.1rem;
+        font-size: 1.35rem;
+      }
+
+      .prose code {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.92em;
+        background: color-mix(in srgb, var(--accent-soft) 55%, transparent);
+        padding: 0.1em 0.35em;
+        border-radius: 6px;
+      }
+
+      .code {
+        margin: 1rem 0;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        overflow: hidden;
+      }
+
+      .code-top {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.82rem;
+        color: var(--muted);
+        padding: 0.45rem 0.7rem;
+        border-bottom: 1px solid var(--border);
+      }
+
+      pre {
+        margin: 0;
+        overflow: auto;
+        padding: 0.85rem;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.88rem;
+        line-height: 1.6;
+      }
+
+      .skip-link {
+        position: absolute;
+        top: -100%;
+        left: 0.5rem;
+        background: var(--surface);
+        color: var(--text);
+        border: 1px solid var(--accent);
+        padding: 0.4rem 0.7rem;
+        border-radius: 8px;
+      }
+
+      .skip-link:focus {
+        top: 0.5rem;
+      }
+
+      :focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 2px;
+      }
+
+      @media (max-width: 980px) {
+        .layout {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          animation: none !important;
+          transition: none !important;
+          scroll-behavior: auto !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a href="#main" class="skip-link">Перейти к содержимому</a>
+    <header class="topbar">
+      <div class="container topbar-inner">
+        <div class="brand">igorlazarev.ru</div>
+        <nav class="nav" aria-label="Основная навигация">
+          <a href="#">Посты</a>
+          <a href="#">Теги</a>
+          <a href="#">Поиск</a>
+          <a href="#">Обо мне</a>
+        </nav>
+        <button id="themeToggle" class="button" type="button">Dark</button>
+      </div>
+    </header>
+
+    <main id="main" class="container">
+      <section class="layout">
+        <div>
+          <article class="panel hero">
+            <p class="kicker">Programming Blog</p>
+            <h1>Личный блог о backend, архитектуре и инженерной практике</h1>
+            <p class="lead">
+              Разборы реальных задач, заметки по Go/Hugo, DevOps-подходы и
+              компактные шпаргалки без воды.
+            </p>
+          </article>
+
+          <section class="panel section">
+            <h2>Последние публикации</h2>
+            <div class="post-list">
+              <a class="post-card" href="#">
+                <div class="meta">13 апр 2026 · 7 мин</div>
+                <h3>Как структурировать post template в Hugo без дублирования</h3>
+                <p class="lead">
+                  Короткий разбор partial-ов, шаблонов и условий для контента.
+                </p>
+                <div class="tags">
+                  <span class="tag">hugo</span>
+                  <span class="tag">templating</span>
+                </div>
+              </a>
+              <a class="post-card" href="#">
+                <div class="meta">10 апр 2026 · 11 мин</div>
+                <h3>Минимальный CI для статического блога с двойной сборкой</h3>
+                <p class="lead">
+                  Сценарий, где основной сайт и reveal-слайды собираются в один
+                  `public/`.
+                </p>
+                <div class="tags">
+                  <span class="tag">ci</span>
+                  <span class="tag">github-actions</span>
+                </div>
+              </a>
+            </div>
+          </section>
+        </div>
+
+        <aside class="panel sidebar">
+          <section>
+            <h3>Популярные теги</h3>
+            <ul>
+              <li><a href="#">go</a></li>
+              <li><a href="#">hugo</a></li>
+              <li><a href="#">architecture</a></li>
+            </ul>
+          </section>
+          <section>
+            <h3>Серии</h3>
+            <ul>
+              <li><a href="#">Backend Essentials</a></li>
+              <li><a href="#">Dev Notes</a></li>
+            </ul>
+          </section>
+          <section>
+            <h3>RSS</h3>
+            <p class="meta">Подпишись, чтобы не пропускать новые статьи.</p>
+          </section>
+        </aside>
+      </section>
+
+      <article class="panel article-wrap">
+        <div class="prose">
+          <h2>Превью страницы статьи</h2>
+          <p class="meta">13 апр 2026 · 8 мин · backend, go</p>
+          <p>
+            Это тестовый фрагмент для оценки читаемости. Основной текст держится
+            в пределах <code>72ch</code>, чтобы длинные абзацы не утомляли.
+          </p>
+          <div class="code">
+            <div class="code-top">go · example.go</div>
+            <pre><code>func BuildPreview(title string) string {
+    if title == "" {
+        return "Untitled post"
+    }
+    return "Preview: " + title
+}</code></pre>
+          </div>
+          <p>
+            В этом режиме можно проверить контраст, интервалы, поведение карточек
+            и общий тон интерфейса до интеграции в Hugo-шаблоны.
+          </p>
+        </div>
+      </article>
+    </main>
+
+    <script>
+      (function () {
+        var root = document.documentElement;
+        var button = document.getElementById("themeToggle");
+        var key = "blog-preview-theme";
+        var saved = localStorage.getItem(key);
+        if (saved === "dark" || saved === "light") {
+          root.setAttribute("data-theme", saved);
+          button.textContent = saved === "dark" ? "Light" : "Dark";
+        }
+
+        button.addEventListener("click", function () {
+          var current = root.getAttribute("data-theme") === "dark" ? "dark" : "light";
+          var next = current === "dark" ? "light" : "dark";
+          root.setAttribute("data-theme", next);
+          localStorage.setItem(key, next);
+          button.textContent = next === "dark" ? "Light" : "Dark";
+        });
+      })();
+    </script>
+  </body>
+</html>

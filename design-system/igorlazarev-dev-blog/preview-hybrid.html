@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Preview Hybrid - igorlazarev.ru</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #f8fafc;
+        --surface: #ffffff;
+        --border: #e2e8f0;
+        --text: #0f172a;
+        --muted: #475569;
+        --accent: #2563eb;
+        --signal: #16a34a;
+      }
+      * { box-sizing: border-box; }
+      body { margin: 0; font-family: Inter, sans-serif; background: var(--bg); color: var(--text); }
+      .wrap { width: min(1140px, calc(100% - 2rem)); margin: 0 auto; padding: 1rem 0 2rem; }
+      .top {
+        position: sticky; top: .5rem; z-index: 10;
+        background: color-mix(in srgb, var(--surface) 92%, transparent);
+        border: 1px solid var(--border); border-radius: 12px; padding: .8rem 1rem;
+        display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(8px);
+      }
+      .brand { font-weight: 700; letter-spacing: -.02em; }
+      .status {
+        font-family: "JetBrains Mono", monospace; font-size: .82rem; color: var(--signal);
+        border: 1px solid #bbf7d0; border-radius: 999px; padding: .16rem .5rem;
+      }
+      .grid { display: grid; grid-template-columns: 1.8fr 1fr; gap: 1rem; margin-top: 1rem; }
+      .panel { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 1rem; }
+      h1, h2, h3 { margin: .2rem 0; line-height: 1.45; letter-spacing: -.02em; }
+      .lead { color: var(--muted); margin: .6rem 0 0; line-height: 1.75; }
+      .terminal-inline {
+        margin-top: .75rem; font-family: "JetBrains Mono", monospace; color: var(--muted);
+        border-left: 3px solid var(--accent); padding-left: .7rem;
+      }
+      .card {
+        display: block; text-decoration: none; color: inherit; margin-top: .7rem;
+        border: 1px solid var(--border); border-radius: 12px; padding: .8rem .9rem;
+        transition: border-color 170ms ease, box-shadow 170ms ease; cursor: pointer;
+      }
+      .card:hover { border-color: var(--accent); box-shadow: 0 6px 16px rgba(37, 99, 235, 0.12); }
+      .meta { color: var(--muted); font-size: .86rem; }
+      .tags { display: flex; gap: .4rem; flex-wrap: wrap; margin-top: .45rem; }
+      .tag {
+        font-size: .76rem; border-radius: 999px; padding: .16rem .5rem; background: #dbeafe; color: #1e3a8a;
+      }
+      .prose { max-width: 72ch; }
+      .prose p { margin: .9rem 0; line-height: 1.75; }
+      .prose code {
+        font-family: "JetBrains Mono", monospace; font-size: .9em; background: #e2e8f0; border-radius: 6px; padding: .1em .35em;
+      }
+      .code {
+        margin-top: .8rem; border: 1px solid var(--border); border-radius: 12px; overflow: hidden;
+      }
+      .code-head {
+        font-family: "JetBrains Mono", monospace; font-size: .8rem; color: var(--muted);
+        padding: .42rem .7rem; border-bottom: 1px solid var(--border); background: #f8fafc;
+      }
+      pre {
+        margin: 0; overflow: auto; padding: .8rem; font-family: "JetBrains Mono", monospace; font-size: .86rem; line-height: 1.6;
+      }
+      .side h3 { font-size: 1rem; }
+      .side ul { list-style: none; margin: .45rem 0 0; padding: 0; }
+      .side li + li { margin-top: .3rem; }
+      .side a { color: var(--muted); text-decoration: none; }
+      .side a:hover { color: var(--accent); }
+      @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+    </style>
+  </head>
+  <body>
+    <main class="wrap">
+      <header class="top">
+        <div class="brand">igorlazarev.ru</div>
+        <span class="status">BUILD: PASSING</span>
+      </header>
+
+      <section class="grid">
+        <div>
+          <article class="panel">
+            <h1>Блог о backend, архитектуре и инженерной дисциплине</h1>
+            <p class="lead">
+              Читаемая editorial-база + аккуратные programmer-акценты:
+              терминальная мета, четкие code blocks, минимальная визуальная “магия”.
+            </p>
+            <p class="terminal-inline">$ latest_topic --name "practical agent workflows"</p>
+          </article>
+
+          <section class="panel" style="margin-top:1rem">
+            <h2>Последние посты</h2>
+            <a class="card" href="#">
+              <div class="meta">13 апр 2026 · 8 мин · go</div>
+              <h3>Модульность Hugo-шаблонов на реальном блоге</h3>
+              <div class="tags"><span class="tag">hugo</span><span class="tag">templates</span></div>
+            </a>
+            <a class="card" href="#">
+              <div class="meta">11 апр 2026 · 10 мин · architecture</div>
+              <h3>Где заканчивается “чистая архитектура” и начинается pragmatism</h3>
+              <div class="tags"><span class="tag">design</span><span class="tag">backend</span></div>
+            </a>
+          </section>
+
+          <article class="panel prose" style="margin-top:1rem">
+            <h2>Превью статьи</h2>
+            <p>
+              Основной текст сохраняет спокойный ритм. Inline-code, например
+              <code>buildDrafts: true</code>, читается без перегруза.
+            </p>
+            <div class="code">
+              <div class="code-head">go · service.go</div>
+              <pre><code>func ParsePosts(items []Post) []Card {
+    cards := make([]Card, 0, len(items))
+    for _, item := range items {
+        cards = append(cards, toCard(item))
+    }
+    return cards
+}</code></pre>
+            </div>
+          </article>
+        </div>
+
+        <aside class="panel side">
+          <h3>Навигация</h3>
+          <ul>
+            <li><a href="#">Поиск</a></li>
+            <li><a href="#">Теги</a></li>
+            <li><a href="#">Серии</a></li>
+            <li><a href="#">RSS</a></li>
+          </ul>
+        </aside>
+      </section>
+    </main>
+  </body>
+</html>
