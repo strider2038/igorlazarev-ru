@@ -148,10 +148,29 @@
         font-weight: normal;
         margin: 0;
         font-size: 1.4rem;
+        white-space: nowrap;
 
         &::before {
-            content: "$ ";
+            content: "$\00a0";
             color: var(--signal);
+        }
+
+        .typing-text {
+            display: inline;
+        }
+
+        .typing-cursor {
+            display: inline-block;
+            width: 0.55em;
+            height: 1.15em;
+            background: var(--signal);
+            margin-left: 1px;
+            vertical-align: text-bottom;
+            animation: cursor-blink 0.75s steps(1) infinite;
+        }
+
+        &.typing-done .typing-cursor {
+            display: none;
         }
 
         @include respond(2xl) {
@@ -186,6 +205,11 @@
     .icon-tabler-toggle-right {
         display: none;
     }
+}
+
+@keyframes cursor-blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
 }
 
 #i18n-switch {

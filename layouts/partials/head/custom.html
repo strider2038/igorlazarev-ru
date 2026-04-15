@@ -14,3 +14,24 @@
 </script>
 <noscript><div><img src="https://mc.yandex.ru/watch/30070179" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 <!-- /Yandex.Metrika counter -->
+
+<script>
+window.addEventListener("DOMContentLoaded",function(){
+    var el=document.querySelector(".typing-text");
+    if(!el)return;
+    var text=el.textContent;
+    var parent=el.parentElement;
+    parent.style.minWidth=parent.offsetWidth+"px";
+    el.textContent="";
+    var i=0;
+    setTimeout(function type(){
+        if(i<text.length){
+            el.textContent+=text.charAt(i);
+            i++;
+            setTimeout(type,55+Math.random()*50);
+        }else{
+            setTimeout(function(){parent.classList.add("typing-done");},800);
+        }
+    },2400);
+});
+</script>
