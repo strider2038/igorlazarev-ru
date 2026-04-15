@@ -1,0 +1,17 @@
+name = "ai-dev-blog-theme"
+license = "GPL-3.0-only"
+licenselink = "https://github.com/strider2038/igorlazarev-ru/blob/master/themes/ai-dev-blog-theme/LICENSE"
+description = "Hybrid editorial-programmer Hugo theme based on hugo-theme-stack architecture"
+homepage = "https://igorlazarev.ru/"
+tags = ["blog", "responsive", "clean", "light", "dark", "personal"]
+features = ["comments", "photowipe", "opengraph", "widgets", "dark-mode", "toc", "search"]
+min_version = "0.145.0"
+
+[author]
+  name = "Igor Lazarev"
+  homepage = "https://igorlazarev.ru/"
+
+[original]
+  name = "Stack"
+  homepage = "https://github.com/CaiJimmy/hugo-theme-stack"
+  repo = "https://github.com/CaiJimmy/hugo-theme-stack"
