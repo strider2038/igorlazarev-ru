@@ -5,8 +5,10 @@ from __future__ import annotations
 
 import argparse
 import json
+import mimetypes
 import os
 import re
+import secrets
 import subprocess
 import sys
 import urllib.error
@@ -17,6 +19,10 @@ from pathlib import Path
 
 
 ZERO_SHA = "0" * 40
+
+# Raster images accepted by Telegram sendPhoto (not WebP). Checked in post folder only.
+POSTER_IMAGE_NAMES = ("poster.png", "poster.jpg", "poster.jpeg")
+TELEGRAM_CAPTION_MAX = 1024
 
 
 @dataclass
@@ -314,6 +320,99 @@ def format_message(post: Post, summary: str) -> str:
     return f"{post.title}\n\n{summary}\n\n{post.url}"
 
 
+def find_post_poster_image(post_md_path: Path) -> Path | None:
+    """Return path to poster.png / poster.jpg / poster.jpeg in the post directory, if present."""
+    post_dir = post_md_path.parent
+    for name in POSTER_IMAGE_NAMES:
+        candidate = post_dir / name
+        if candidate.is_file():
+            return candidate
+    return None
+
+
+def truncate_telegram_caption(text: str, max_len: int = TELEGRAM_CAPTION_MAX) -> str:
+    if len(text) <= max_len:
+        return text
+    if max_len <= 1:
+        return text[:max_len]
+    return text[: max_len - 1] + "…"
+
+
+def build_multipart_form_data(
+    fields: dict[str, str],
+    file_field: str,
+    filename: str,
+    file_bytes: bytes,
+    content_type: str,
+) -> tuple[bytes, str]:
+    boundary = f"----telegramBoundary{secrets.token_hex(12)}"
+    crlf = b"\r\n"
+    chunks: list[bytes] = []
+
+    for name, value in fields.items():
+        chunks.append(f"--{boundary}".encode("ascii"))
+        chunks.append(crlf)
+        chunks.append(f'Content-Disposition: form-data; name="{name}"'.encode("utf-8"))
+        chunks.append(crlf)
+        chunks.append(crlf)
+        chunks.append(value.encode("utf-8"))
+        chunks.append(crlf)
+
+    disp = (
+        f'Content-Disposition: form-data; name="{file_field}"; '
+        f'filename="{filename}"'
+    )
+    chunks.append(f"--{boundary}".encode("ascii"))
+    chunks.append(crlf)
+    chunks.append(disp.encode("utf-8"))
+    chunks.append(crlf)
+    chunks.append(f"Content-Type: {content_type}".encode("ascii"))
+    chunks.append(crlf)
+    chunks.append(crlf)
+    chunks.append(file_bytes)
+    chunks.append(crlf)
+    chunks.append(f"--{boundary}--".encode("ascii"))
+    chunks.append(crlf)
+
+    body = b"".join(chunks)
+    content_type_hdr = f"multipart/form-data; boundary={boundary}"
+    return body, content_type_hdr
+
+
+def send_telegram_photo(caption: str, image_path: Path) -> None:
+    token = required_env("TELEGRAM_BOT_TOKEN")
+    chat_id = required_env("TELEGRAM_CHAT_ID")
+    file_bytes = image_path.read_bytes()
+    guessed, _ = mimetypes.guess_type(image_path.name)
+    content_type = guessed or "application/octet-stream"
+
+    body, content_type_hdr = build_multipart_form_data(
+        {"chat_id": chat_id, "caption": truncate_telegram_caption(caption)},
+        "photo",
+        image_path.name,
+        file_bytes,
+        content_type,
+    )
+    request = urllib.request.Request(
+        f"https://api.telegram.org/bot{token}/sendPhoto",
+        data=body,
+        headers={"Content-Type": content_type_hdr},
+        method="POST",
+    )
+
+    try:
+        with urllib.request.urlopen(request, timeout=60) as response:
+            data = json.load(response)
+    except urllib.error.HTTPError as exc:
+        err_body = exc.read().decode("utf-8", errors="replace")
+        raise RuntimeError(f"Telegram request failed: {exc.code} {err_body}") from exc
+    except urllib.error.URLError as exc:
+        raise RuntimeError(f"Telegram request failed: {exc}") from exc
+
+    if not data.get("ok"):
+        raise RuntimeError(f"Telegram API returned error: {data}")
+
+
 def required_env(name: str) -> str:
     value = os.environ.get(name)
     if not value:
@@ -349,11 +448,19 @@ def main() -> int:
     if args.dry_run:
         for item in prepared:
             print("---")
+            poster = find_post_poster_image(item.post.path)
+            mode = f"photo ({poster.name})" if poster else "text (no poster.png/jpg/jpeg)"
+            print(f"[{mode}]")
             print(format_message(item.post, item.summary))
         return 0
 
     for item in prepared:
-        send_telegram_message(format_message(item.post, item.summary))
+        text = format_message(item.post, item.summary)
+        poster = find_post_poster_image(item.post.path)
+        if poster:
+            send_telegram_photo(text, poster)
+        else:
+            send_telegram_message(text)
         print(f"Sent Telegram announcement for {item.post.path.relative_to(repo_root)}")
 
     return 0
