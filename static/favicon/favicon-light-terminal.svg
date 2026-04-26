@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title desc">
+<title id="title">Light laptop terminal favicon</title>
+<desc id="desc">Minimal light laptop with a terminal prompt showing greater-than and underscore.</desc>
+<rect width="64" height="64" rx="18" fill="#0f172a"/>
+<rect x="14" y="14" width="36" height="26" rx="4" fill="#e5edf7"/>
+<rect x="16.5" y="16.5" width="31" height="21" rx="2.5" fill="#111827"/>
+<path d="M22.5 23.5l4.5 4-4.5 4" fill="none" stroke="#38bdf8" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+<path d="M32.5 31.5h9.5" fill="none" stroke="#f8fafc" stroke-linecap="round" stroke-width="3"/>
+<path d="M11 43h42c0 3.4-3.1 6-7 6H18c-3.9 0-7-2.6-7-6Z" fill="#cbd5e1"/>
+<path d="M28 43h8l1.4 2.2h-10.8Z" fill="#94a3b8"/>
+</svg>

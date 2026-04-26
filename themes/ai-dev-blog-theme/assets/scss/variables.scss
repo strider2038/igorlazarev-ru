@@ -1,0 +1,188 @@
+/*
+*   Global style — Hybrid Design System
+*   Slate/Blue palette + Signal green
+*/
+:root {
+    --main-top-padding: 35px;
+
+    @include respond(xl) {
+        --main-top-padding: 50px;
+    }
+
+    --bg: #f8fafc;
+    --surface: #ffffff;
+    --text: #0f172a;
+    --muted: #475569;
+    --border: #e2e8f0;
+    --accent: #2563eb;
+    --accent-darker: #1d4ed8;
+    --accent-soft: #dbeafe;
+    --accent-text: #ffffff;
+    --signal: #16a34a;
+    --signal-border: #bbf7d0;
+
+    --body-background: var(--bg);
+    --accent-color: var(--accent);
+    --accent-color-darker: var(--accent-darker);
+    --accent-color-text: var(--accent-text);
+    --body-text-color: var(--muted);
+
+    --tag-border-radius: 999px;
+
+    --section-separation: 40px;
+
+    --scrollbar-thumb: hsl(214, 14%, 82%);
+    --scrollbar-track: var(--body-background);
+
+    &[data-scheme="dark"] {
+        --bg: #020617;
+        --surface: #0f172a;
+        --text: #e2e8f0;
+        --muted: #94a3b8;
+        --border: #1e293b;
+        --accent: #60a5fa;
+        --accent-darker: #3b82f6;
+        --accent-soft: #1e3a8a;
+        --accent-text: #020617;
+        --signal: #22c55e;
+        --signal-border: rgba(34, 197, 94, 0.3);
+
+        --body-background: var(--bg);
+        --accent-color: var(--accent);
+        --accent-color-darker: var(--accent-darker);
+        --accent-color-text: var(--accent-text);
+        --body-text-color: var(--muted);
+
+        --scrollbar-thumb: hsl(215, 28%, 25%);
+        --scrollbar-track: var(--body-background);
+    }
+}
+
+/**
+*   Global font family
+*/
+:root {
+    --sys-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Droid Sans", "Helvetica Neue";
+    --base-font-family: "Inter", var(--sys-font-family), sans-serif;
+    --article-font-family: "Inter", var(--sys-font-family), sans-serif;
+    --code-font-family: "JetBrains Mono", Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+/*
+*   Card style
+*/
+:root {
+    --card-background: var(--surface);
+    --card-background-selected: #f1f5f9;
+
+    --card-text-color-main: var(--text);
+    --card-text-color-secondary: var(--muted);
+    --card-text-color-tertiary: #64748b;
+    --card-separator-color: var(--border);
+
+    --card-border-radius: 12px;
+
+    --card-padding: 20px;
+
+    @include respond(md) {
+        --card-padding: 25px;
+    }
+
+    @include respond(xl) {
+        --card-padding: 30px;
+    }
+
+    --small-card-padding: 25px 20px;
+
+    @include respond(md) {
+        --small-card-padding: 25px;
+    }
+
+    &[data-scheme="dark"] {
+        --card-background: var(--surface);
+        --card-background-selected: rgba(255, 255, 255, 0.06);
+        --card-text-color-main: var(--text);
+        --card-text-color-secondary: #cbd5e1;
+        --card-text-color-tertiary: #94a3b8;
+        --card-separator-color: var(--border);
+    }
+}
+
+/**
+*   Article content font settings
+*/
+:root {
+    --article-font-size: 1.6rem;
+
+    @include respond(md) {
+        --article-font-size: 1.8rem;
+    }
+
+    --article-line-height: 1.72;
+}
+
+/*
+*   Article content style
+*/
+:root {
+    --blockquote-border-size: 3px;
+    --blockquote-background-color: #f1f5f9;
+
+    --heading-border-size: 3px;
+
+    --link-background-color: 37, 99, 235;
+    --link-background-opacity: 0.12;
+    --link-background-opacity-hover: 0.22;
+
+    --pre-background-color: #0f172a;
+    --pre-text-color: #e2e8f0;
+
+    --code-background-color: #e2e8f0;
+    --code-text-color: #0f172a;
+
+    --table-border-color: var(--border);
+    --tr-even-background-color: #f8fafc;
+
+    --kbd-border-color: var(--border);
+
+    &[data-scheme="dark"] {
+        --code-background-color: #1e293b;
+        --code-text-color: #bfdbfe;
+
+        --table-border-color: #1e293b;
+        --tr-even-background-color: #0f172a;
+
+        --blockquote-background-color: #1e293b;
+
+        --pre-background-color: #0b1220;
+        --pre-text-color: #dbeafe;
+    }
+}
+
+/*
+*   Shadow style — reduced intensity for flatter look
+*/
+:root {
+    --shadow-l1: 0px 1px 3px rgba(0, 0, 0, 0.04), 0px 1px 2px rgba(0, 0, 0, 0.06);
+    --shadow-l2: 0px 4px 12px rgba(0, 0, 0, 0.06), 0px 1px 3px rgba(0, 0, 0, 0.04);
+    --shadow-l3: 0px 6px 16px rgba(0, 0, 0, 0.06), 0px 2px 6px rgba(0, 0, 0, 0.04);
+    --shadow-l4: 0px 12px 24px rgba(0, 0, 0, 0.06), 0px 4px 8px rgba(0, 0, 0, 0.04);
+}
+
+[data-scheme="light"] {
+    --pre-text-color: #272822;
+    --pre-background-color: #fafafa;
+    @import "partials/highlight/light.scss";
+}
+
+[data-scheme="dark"] {
+    --pre-text-color: #f8f8f2;
+    --pre-background-color: #272822;
+    @import "partials/highlight/dark.scss";
+}
+
+:root {
+    --menu-icon-separation: 40px;
+    --container-padding: 15px;
+    --widget-separation: var(--section-separation);
+}

@@ -2,7 +2,7 @@ baseurl: https://igorlazarev.ru/
 languageCode: ru
 title: Игорь Лазарев
 copyright: Игорь Лазарев
-theme: "hugo-theme-stack"
+theme: "ai-dev-blog-theme"
 
 ignorefiles:
   - "content/slides"
@@ -19,7 +19,6 @@ outputs:
   home:
     - HTML
     - RSS
-    - JSON # necessary for search
 
 # Theme i18n support
 # Available values: ar, bn, ca, de, el, en, es, fr, hu, id, it, ja, ko, nl, pt-br, th, uk, zh-cn, zh-hk, zh-tw
@@ -64,7 +63,7 @@ params:
     lastUpdated: Jan 02, 2006 15:04 MST
 
   sidebar:
-    subtitle: Заметки Golang программиста
+    subtitle: Заметки AI инженера
     avatar:
       enabled: true
       local: false
