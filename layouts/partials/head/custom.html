@@ -27,8 +27,17 @@
 window.addEventListener("DOMContentLoaded",function(){
     var el=document.querySelector(".typing-text");
     if(!el)return;
-    var text=el.textContent;
     var parent=el.parentElement;
+    var key="subtitle-typing-done:v1";
+    var done=false;
+    try{
+        done=sessionStorage.getItem(key)==="1";
+    }catch(e){}
+    if(done){
+        parent.classList.add("typing-done");
+        return;
+    }
+    var text=el.textContent;
     parent.style.minWidth=parent.offsetWidth+"px";
     el.textContent="";
     var i=0;
@@ -38,6 +47,9 @@ window.addEventListener("DOMContentLoaded",function(){
             i++;
             setTimeout(type,55+Math.random()*50);
         }else{
+            try{
+                sessionStorage.setItem(key,"1");
+            }catch(e){}
             setTimeout(function(){parent.classList.add("typing-done");},800);
         }
     },2400);
