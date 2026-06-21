@@ -22,6 +22,28 @@ Notes:
 - Keep categories and tags concise.
 - For English translations, preserve `slug`, `translationKey`, `date`, and `image`.
 
+## Telegram Announcement (`telegram.txt`)
+
+For every new Russian source post (`index.md`), also create `telegram.txt` in the same bundle.
+
+Example bundle:
+
+```text
+content/post/2026-06-example-slug/
+  index.md
+  telegram.txt
+  poster.webp
+```
+
+`telegram.txt` rules:
+
+- plain text, 2-4 sentences in Russian
+- no markdown, hashtags, title, or URL
+- faithfully compress the intro; do not add new claims
+- separate from `description` (site preview vs channel announcement)
+
+CI reads `telegram.txt` when announcing new posts. Missing or empty file fails the deploy job.
+
 ## Tone Rules
 
 - Keep the author's voice personal and direct.

@@ -85,7 +85,22 @@ Rules:
 - Preserve useful links and examples.
 - Prefer Russian for new source posts unless the user asks otherwise.
 
-### 5. Close with cover prompts
+### 5. Write `telegram.txt`
+
+Create `telegram.txt` in the same page bundle as `index.md`.
+
+Rules:
+
+- Plain text only: no markdown, no hashtags, no title line, no URL.
+- 2-4 sentences in Russian.
+- Compress the intro faithfully; preserve the author's wording where possible.
+- Do not invent facts that are not in the article.
+- Allow only minimal edits for brevity and readability.
+- Natural, conversational tone.
+
+`description` is for the site preview; `telegram.txt` is for the Telegram channel announcement.
+
+### 6. Close with cover prompts
 
 After writing the post, propose 2-4 image prompts:
 
@@ -146,6 +161,7 @@ When done, summarize:
 
 - which file was created or updated
 - whether the result is a note or an article
+- path to `telegram.txt`
 - proposed cover prompts
 
 ## Additional Resources

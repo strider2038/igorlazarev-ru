@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Announce newly added Hugo posts in Telegram via OpenRouter summaries."""
+"""Announce newly added Hugo posts in Telegram using bundle-local telegram.txt."""
 
 from __future__ import annotations
 
@@ -22,6 +22,7 @@ ZERO_SHA = "0" * 40
 
 # Raster images accepted by Telegram sendPhoto (not WebP). Checked in post folder only.
 POSTER_IMAGE_NAMES = ("poster.png", "poster.jpg", "poster.jpeg")
+TELEGRAM_SUMMARY_FILENAME = "telegram.txt"
 TELEGRAM_CAPTION_MAX = 1024
 
 
@@ -177,14 +178,6 @@ def clean_markdown(text: str) -> str:
     return text.strip()
 
 
-def extract_lead_text(raw_body: str) -> str:
-    lead = raw_body
-    if "<!--more-->" in lead:
-        lead = lead.split("<!--more-->", 1)[0]
-    lead = clean_markdown(lead)
-    return lead[:2000].strip()
-
-
 def build_post_url(base_url: str, post_permalink: str, slug: str) -> str:
     path = post_permalink.replace(":slug", slug)
     return f"{base_url}{path}"
@@ -212,77 +205,20 @@ def load_post(path: Path, base_url: str, post_permalink: str) -> Post:
     )
 
 
-def request_openrouter_summary(post: Post) -> str:
-    api_key = required_env("OPENROUTER_API_KEY")
-    model = os.environ.get("OPENROUTER_MODEL", "openai/gpt-4o-mini")
-    raw_text = post.path.read_text(encoding="utf-8")
-    _, raw_body = parse_front_matter_and_body(raw_text)
-    lead_text = extract_lead_text(raw_body)
+def load_telegram_summary(post_md_path: Path) -> str:
+    summary_path = post_md_path.parent / TELEGRAM_SUMMARY_FILENAME
+    if not summary_path.is_file():
+        rel_post = post_md_path.as_posix()
+        raise RuntimeError(
+            f"Missing {TELEGRAM_SUMMARY_FILENAME} for {rel_post}. "
+            "Create a plain-text Telegram announcement in the post bundle before publishing."
+        )
 
-    prompt = (
-        "Сожми начало статьи в короткое сообщение для Telegram-канала на русском языке.\n"
-        "Требования:\n"
-        "- 2-4 предложения\n"
-        "- максимально сохраняй формулировки и смысл из начала статьи\n"
-        "- главная задача: аккуратно сократить текст до формата короткого Telegram-сообщения\n"
-        "- не пересказывай статью заново своими словами без необходимости\n"
-        "- допустимы только минимальные правки ради краткости, связности и читабельности\n"
-        "- живой, естественный тон\n"
-        "- без хэштегов\n"
-        "- без markdown и кавычек-елочек\n"
-        "- не добавляй фактов, которых нет в тексте\n\n"
-        f"Заголовок: {post.title}\n"
-        f"Начало статьи: {lead_text}\n\n"
-        f"Полный текст статьи для контекста: {post.body[:6000]}"
-    )
-
-    payload = {
-        "model": model,
-        "temperature": 0.5,
-        "messages": [
-            {
-                "role": "system",
-                "content": (
-                    "Ты готовишь короткие Telegram-анонсы новых публикаций технического блога. "
-                    "Нужно бережно сжимать начало статьи, не искажая смысл и не добавляя новых "
-                    "утверждений от себя."
-                ),
-            },
-            {"role": "user", "content": prompt},
-        ],
-    }
-
-    request = urllib.request.Request(
-        "https://openrouter.ai/api/v1/chat/completions",
-        data=json.dumps(payload).encode("utf-8"),
-        headers={
-            "Authorization": f"Bearer {api_key}",
-            "Content-Type": "application/json",
-            "HTTP-Referer": "https://igorlazarev.ru",
-            "X-OpenRouter-Title": "igorlazarev.ru post announcements",
-        },
-        method="POST",
-    )
-
-    try:
-        with urllib.request.urlopen(request, timeout=60) as response:
-            response_data = json.load(response)
-    except urllib.error.HTTPError as exc:
-        body = exc.read().decode("utf-8", errors="replace")
-        raise RuntimeError(f"OpenRouter request failed: {exc.code} {body}") from exc
-    except urllib.error.URLError as exc:
-        raise RuntimeError(f"OpenRouter request failed: {exc}") from exc
-
-    try:
-        content = response_data["choices"][0]["message"]["content"]
-    except (KeyError, IndexError, TypeError) as exc:
-        raise RuntimeError(f"Unexpected OpenRouter response: {response_data}") from exc
-
-    summary = re.sub(r"\s+", " ", str(content)).strip()
+    summary = summary_path.read_text(encoding="utf-8").strip()
     if not summary:
-        raise RuntimeError("OpenRouter returned an empty summary")
+        raise RuntimeError(f"{TELEGRAM_SUMMARY_FILENAME} is empty for {post_md_path.as_posix()}")
 
-    return summary
+    return re.sub(r"\s+", " ", summary).strip()
 
 
 def send_telegram_message(text: str) -> None:
@@ -442,7 +378,7 @@ def main() -> int:
 
     prepared: list[PreparedAnnouncement] = []
     for post in posts:
-        summary = request_openrouter_summary(post)
+        summary = load_telegram_summary(post.path)
         prepared.append(PreparedAnnouncement(post=post, summary=summary))
 
     if args.dry_run:

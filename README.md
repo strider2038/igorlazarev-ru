@@ -36,14 +36,10 @@ git submodule add https://github.com/<path-to>/<repository>.git themes/<theme-na
 * сообщение отправляется только для **новых** файлов `content/post/**/index.md`
 * правки существующих постов не анонсируются повторно
 * на `re-run` workflow повторная отправка отключена
-* summary для анонса обязательно запрашивается через OpenRouter
+* текст анонса берётся из `telegram.txt` в page bundle поста (2–4 предложения, plain text)
+* без `telegram.txt` job падает — анонс готовится при написании поста, а не в CI
 
 Для настройки добавьте GitHub secrets:
 
-* `OPENROUTER_API_KEY`
 * `TELEGRAM_BOT_TOKEN`
 * `TELEGRAM_CHAT_ID`
-
-Опционально можно добавить GitHub Actions variable:
-
-* `OPENROUTER_MODEL` — модель OpenRouter для генерации summary. Если не задана, используется `openai/gpt-4o-mini`.
