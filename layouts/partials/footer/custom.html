@@ -1,0 +1,11 @@
+<footer class="privacy-footer">
+    {{- with .Site.GetPage "page" "privacy" -}}
+        <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+    {{- end -}}
+    {{- if .Site.Params.cookies.enabled -}}
+        &nbsp;|&nbsp;
+        <button class="cookie-settings-link" type="button" data-cookie-action="reopen">
+            {{ T "cookies.footerLink" }}
+        </button>
+    {{- end -}}
+</footer>

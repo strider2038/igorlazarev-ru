@@ -120,6 +120,13 @@ params:
     # Available values: auto, light, dark
     default: auto
 
+  cookies:
+    enabled: true
+    showSettings: true
+    categories:
+      analytics: true
+      functional: true
+
   imageProcessing:
     cover:
       enabled: true

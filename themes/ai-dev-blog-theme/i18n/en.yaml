@@ -71,3 +71,42 @@ footer:
 
     designedBy:
         other: Theme {{ .Theme }} designed by {{ .DesignedBy }}
+
+cookies:
+    title:
+        other: Cookie Consent
+    text:
+        other: We use cookies for analytics and external widgets.
+    privacyLink:
+        other: Learn more
+    acceptAll:
+        other: Accept all
+    deny:
+        other: Reject
+    managePreferences:
+        other: Manage preferences
+    settingsTitle:
+        other: Cookie settings
+    savePreferences:
+        other: Save preferences
+    cancel:
+        other: Cancel
+    footerLink:
+        other: Cookie settings
+    commentsDisabled:
+        other: Comments are disabled until you accept functional cookies.
+    necessary:
+        title:
+            other: Necessary
+        text:
+            other: These cookies are required to save your preferences and cannot be disabled.
+    analytics:
+        title:
+            other: Analytics
+        text:
+            other: These cookies help us understand which materials are read more often.
+    functional:
+        title:
+            other: Functional
+        text:
+            other: These cookies and external widgets enable comments and similar features.

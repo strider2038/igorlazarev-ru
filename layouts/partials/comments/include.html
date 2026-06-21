@@ -1,0 +1,77 @@
+{{ if .Site.Params.comments.enabled }}
+    {{- $needsConsent := and .Site.Params.cookies.enabled .Site.Params.cookies.categories.functional -}}
+    {{- if and $needsConsent (eq .Site.Params.comments.provider "giscus") -}}
+        <div id="comments-consent-placeholder" class="consent-placeholder">
+            <p>{{ T "cookies.commentsDisabled" }}</p>
+            <button class="cookie-btn cookie-btn--primary" type="button" data-cookie-action="reopen">
+                {{ T "cookies.managePreferences" }}
+            </button>
+        </div>
+        <div id="giscus-comments-container"></div>
+        {{- with .Site.Params.comments.giscus }}
+        {{- $lang := default $.Site.Language.Lang .lang -}}
+        <script>
+        (function () {
+            var loaded = false;
+            var container = document.getElementById("giscus-comments-container");
+            var placeholder = document.getElementById("comments-consent-placeholder");
+
+            function setGiscusTheme(theme) {
+                var giscus = document.querySelector("iframe.giscus-frame");
+                if (giscus) {
+                    giscus.contentWindow.postMessage({ giscus: { setConfig: { theme: theme } } }, "https://giscus.app");
+                }
+            }
+
+            function syncGiscusTheme() {
+                if (document.documentElement.dataset.scheme === "light") {
+                    setGiscusTheme({{ default "light" .lightTheme | jsonify }});
+                } else {
+                    setGiscusTheme({{ default "dark_dimmed" .darkTheme | jsonify }});
+                }
+            }
+
+            function loadGiscus() {
+                if (loaded || !container) return;
+                loaded = true;
+                if (placeholder) placeholder.style.display = "none";
+
+                var script = document.createElement("script");
+                script.src = "https://giscus.app/client.js";
+                script.setAttribute("data-repo", {{ .repo | jsonify }});
+                script.setAttribute("data-repo-id", {{ .repoID | jsonify }});
+                script.setAttribute("data-category", {{ .category | jsonify }});
+                script.setAttribute("data-category-id", {{ .categoryID | jsonify }});
+                script.setAttribute("data-mapping", {{ default "title" .mapping | jsonify }});
+                script.setAttribute("data-strict", {{ default 0 .strict | jsonify }});
+                script.setAttribute("data-reactions-enabled", {{ default 1 .reactionsEnabled | jsonify }});
+                script.setAttribute("data-emit-metadata", {{ default 0 .emitMetadata | jsonify }});
+                script.setAttribute("data-input-position", {{ default "top" .inputPosition | jsonify }});
+                script.setAttribute("data-theme", {{ default "light" .lightTheme | jsonify }});
+                script.setAttribute("data-lang", {{ $lang | jsonify }});
+                script.setAttribute("data-loading", {{ default "lazy" .loading | jsonify }});
+                script.setAttribute("crossorigin", "anonymous");
+                script.async = true;
+                container.appendChild(script);
+
+                window.addEventListener("message", function (event) {
+                    if (event.origin !== "https://giscus.app") return;
+                    syncGiscusTheme();
+                });
+                window.addEventListener("onColorSchemeChange", syncGiscusTheme);
+            }
+
+            window.addEventListener("onCookieConsentChange", function (event) {
+                if (event.detail && event.detail.functional) loadGiscus();
+            });
+
+            if (window.cookieConsent && window.cookieConsent.hasConsent("functional")) {
+                loadGiscus();
+            }
+        })();
+        </script>
+        {{- end -}}
+    {{- else -}}
+        {{ partial (printf "comments/provider/%s" .Site.Params.comments.provider) . }}
+    {{- end -}}
+{{ end }}

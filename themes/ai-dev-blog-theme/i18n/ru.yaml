@@ -64,3 +64,42 @@ footer:
         other: Создано при помощи {{ .Generator }}
     designedBy:
         other: Тема {{ .Theme }}, дизайн {{ .DesignedBy }}
+
+cookies:
+    title:
+        other: Согласие на использование файлов cookie
+    text:
+        other: Мы используем cookie для аналитики и внешних виджетов.
+    privacyLink:
+        other: Подробнее
+    acceptAll:
+        other: Принять все
+    deny:
+        other: Отклонить
+    managePreferences:
+        other: Управление настройками
+    settingsTitle:
+        other: Настройки файлов cookie
+    savePreferences:
+        other: Сохранить настройки
+    cancel:
+        other: Отмена
+    footerLink:
+        other: Настройки файлов cookie
+    commentsDisabled:
+        other: Комментарии отключены, пока вы не примете функциональные cookie.
+    necessary:
+        title:
+            other: Необходимые
+        text:
+            other: Эти cookie нужны для сохранения выбранных настроек и не могут быть отключены.
+    analytics:
+        title:
+            other: Аналитика
+        text:
+            other: Эти cookie помогают понять, какие материалы читают чаще.
+    functional:
+        title:
+            other: Функциональные
+        text:
+            other: Эти cookie и внешние виджеты включают комментарии и похожие функции.

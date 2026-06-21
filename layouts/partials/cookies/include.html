@@ -1,0 +1,195 @@
+{{- if .Site.Params.cookies.enabled -}}
+<div id="cookie-consent-banner" class="cookie-banner" aria-hidden="true" role="dialog" aria-labelledby="cookie-banner-title">
+    <div class="cookie-banner__content">
+        <div class="cookie-banner__text">
+            <strong id="cookie-banner-title">{{ T "cookies.title" }}</strong>
+            <p>
+                {{ T "cookies.text" }}
+                {{- with .Site.GetPage "page" "privacy" -}}
+                    <a href="{{ .RelPermalink }}">{{ T "cookies.privacyLink" }}</a>
+                {{- end -}}
+            </p>
+        </div>
+
+        <div class="cookie-banner__actions">
+            <button class="cookie-btn cookie-btn--secondary" type="button" data-cookie-action="deny">
+                {{ T "cookies.deny" }}
+            </button>
+            <button class="cookie-btn cookie-btn--primary" type="button" data-cookie-action="accept">
+                {{ T "cookies.acceptAll" }}
+            </button>
+        </div>
+
+        {{- if .Site.Params.cookies.showSettings }}
+            <button class="cookie-banner__settings-link" type="button" data-cookie-action="settings">
+                {{ T "cookies.managePreferences" }}
+            </button>
+        {{- end }}
+
+        <div id="cookie-settings-panel" class="cookie-settings" aria-hidden="true">
+            <h3>{{ T "cookies.settingsTitle" }}</h3>
+
+            <div class="cookie-category">
+                <label>
+                    <input type="checkbox" name="necessary" checked disabled>
+                    <strong>{{ T "cookies.necessary.title" }}</strong>
+                </label>
+                <p>{{ T "cookies.necessary.text" }}</p>
+            </div>
+
+            {{- if .Site.Params.cookies.categories.analytics }}
+            <div class="cookie-category">
+                <label>
+                    <input type="checkbox" name="analytics" data-cookie-category="analytics">
+                    <strong>{{ T "cookies.analytics.title" }}</strong>
+                </label>
+                <p>{{ T "cookies.analytics.text" }}</p>
+            </div>
+            {{- end }}
+
+            {{- if .Site.Params.cookies.categories.functional }}
+            <div class="cookie-category">
+                <label>
+                    <input type="checkbox" name="functional" data-cookie-category="functional">
+                    <strong>{{ T "cookies.functional.title" }}</strong>
+                </label>
+                <p>{{ T "cookies.functional.text" }}</p>
+            </div>
+            {{- end }}
+
+            <div class="cookie-settings__actions">
+                <button class="cookie-btn cookie-btn--secondary" type="button" data-cookie-action="cancel">
+                    {{ T "cookies.cancel" }}
+                </button>
+                <button class="cookie-btn cookie-btn--primary" type="button" data-cookie-action="save">
+                    {{ T "cookies.savePreferences" }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+(function () {
+    var cookieName = "cookie_consent";
+    var cookieDays = 365;
+    var state = null;
+    var banner = document.getElementById("cookie-consent-banner");
+    var settingsPanel = document.getElementById("cookie-settings-panel");
+
+    function loadState() {
+        var item = document.cookie.split("; ").find(function (row) {
+            return row.indexOf(cookieName + "=") === 0;
+        });
+        if (!item) return null;
+
+        try {
+            return JSON.parse(decodeURIComponent(item.split("=")[1]));
+        } catch (e) {
+            return null;
+        }
+    }
+
+    function saveState() {
+        var expires = new Date();
+        expires.setDate(expires.getDate() + cookieDays);
+        document.cookie = cookieName + "=" + encodeURIComponent(JSON.stringify(state)) + "; expires=" + expires.toUTCString() + "; path=/; SameSite=Lax";
+    }
+
+    function dispatchConsentEvent() {
+        window.dispatchEvent(new CustomEvent("onCookieConsentChange", { detail: state }));
+        if (state) {
+            document.documentElement.dataset.consentAnalytics = String(state.analytics);
+            document.documentElement.dataset.consentFunctional = String(state.functional);
+        }
+    }
+
+    function showBanner() {
+        if (banner) banner.removeAttribute("aria-hidden");
+    }
+
+    function hideBanner() {
+        if (banner) banner.setAttribute("aria-hidden", "true");
+        hideSettings();
+    }
+
+    function showSettings() {
+        if (!settingsPanel) return;
+        settingsPanel.removeAttribute("aria-hidden");
+
+        settingsPanel.querySelectorAll("input[data-cookie-category]").forEach(function (checkbox) {
+            var category = checkbox.dataset.cookieCategory;
+            checkbox.checked = Boolean(state && state[category]);
+        });
+    }
+
+    function hideSettings() {
+        if (settingsPanel) settingsPanel.setAttribute("aria-hidden", "true");
+    }
+
+    function setState(analytics, functional) {
+        state = {
+            necessary: true,
+            analytics: analytics,
+            functional: functional,
+            timestamp: Date.now()
+        };
+        saveState();
+        hideBanner();
+        dispatchConsentEvent();
+    }
+
+    function saveSettings() {
+        var analytics = false;
+        var functional = false;
+
+        document.querySelectorAll("input[data-cookie-category]").forEach(function (checkbox) {
+            if (checkbox.dataset.cookieCategory === "analytics") analytics = checkbox.checked;
+            if (checkbox.dataset.cookieCategory === "functional") functional = checkbox.checked;
+        });
+
+        setState(analytics, functional);
+    }
+
+    document.addEventListener("click", function (event) {
+        var target = event.target.closest("[data-cookie-action]");
+        if (!target) return;
+
+        switch (target.dataset.cookieAction) {
+            case "accept":
+                setState(true, true);
+                break;
+            case "deny":
+                setState(false, false);
+                break;
+            case "settings":
+            case "reopen":
+                showBanner();
+                showSettings();
+                break;
+            case "save":
+                saveSettings();
+                break;
+            case "cancel":
+                hideSettings();
+                break;
+        }
+    });
+
+    state = loadState();
+
+    window.cookieConsent = {
+        hasConsent: function (category) {
+            return Boolean(state && state[category]);
+        },
+        getState: function () {
+            return state;
+        },
+        reopenBanner: showBanner
+    };
+
+    if (!state) showBanner();
+    dispatchConsentEvent();
+})();
+</script>
+{{- end -}}
